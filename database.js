@@ -12,10 +12,19 @@ export const vagas = [
     {empresa: "AnotaAi", cargo: "AnalistaJuniorFrontEnd", requisitosExigidos: ["HTML5", "CCS3", 
         "JavaScript", "Angular", "UiUx", "Comunicacao", "AprendizagemRapida"]
     },
-    {empresa: "CaktoPay", cargo: "DesenvolvedorFrontendJrReact", requisitosExigidos: ["React.js", "HTML5", 
-        "CSS3", "JavaScript", "APIs", "Figma", "UiUx", "Git", "FrontEnd"]
+    {empresa: "CaktoPay", cargo: "DesenvolvedorFrontendJrReact", requisitosExigidos: ["React.js", 
+        "HTML5", "CSS3", "JavaScript", "APIs", "Figma", "UiUx", "Git", "FrontEnd"]
     }
 ];
 
+/* Perfil fake, pois ainda não possuo habilidades técnicas o suficientes para candidatar-me.
+O perfil fake está em transição de carreira e atua como Freelance desde Nov/2025. */
+const candidato = {
+    nome: "Daniel Souza e Silva",
+    areaInteresse: "Front-End",
+    habilidades: ["HTML5", "CSS3", "JavaScript (ES6+)", "TypeScript", "React.js", "Next.js", 
+        "Tailwind CSS", "Git", "GitHub", "Figma"],
+    experiencia: "1 ano" 
+};
 
 
