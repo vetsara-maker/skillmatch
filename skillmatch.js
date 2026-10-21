@@ -1,33 +1,31 @@
 const prompt = require("prompt-sync")();
 const db = require("./database");
 
-// ==========================================
-// 1. início do programa com interação ao usuário
-// ==========================================
-console.log("====================================================");
-console.log("       MOTOR DE TRIAGEM -> SKILLMATCH JS             ");
-console.log("====================================================");
-const nomeUsuario = prompt("Por favor, introduza o seu nome: ");
-console.log(`\nBem-vindo ${nomeUsuario}, vamos iniciar a análise candidato/vagas...\n`);
 
-// ==========================================
+// 1. início do programa com interação ao usuário
+
+console.log("-----------------------------------------------------");
+console.log("       Aplicativo -> SKILLMATCH JS             ");
+console.log("-----------------------------------------------------");
+const nomeUsuario = prompt("Por favor, digite o seu nome: ");
+console.log(`\nBem-vindo ${nomeUsuario}, iniciando a análise candidato/vagas...\n`);
+
 // 2. Simulando servidor assíncrono (RF14)
-// ==========================================
+
 function buscarDadosDoServidor() {
     return new Promise((resolve) => {
-        console.log("🔄 Buscando dados das vagas e candidatos no servidor...");
+        console.log("Buscando dados sobre vagas e candidatos no servidor...");
         setTimeout(() => {
             resolve({
                 vagas: db.vagas,
-                candidato: db.candidato[0] // Captura o objeto do array do teu database.js
+                candidato: db.candidato[0] // Captura do objeto do array do database.js
             });
         }, 1500);
     });
 }
 
-// ==========================================
-// 3. Arquitetura de classes (RF09, RF10, RF11)
-// ==========================================
+// 3. Arquitetura de classes (RF09, RF10, RF11). Empresa de RH voltada a tecnologia (classe main= VagaTech)
+
 class VagaTech {
     constructor(empresa, cargo, requisitosExigidos) {
         this.empresa = empresa;
@@ -39,54 +37,52 @@ class VagaTech {
 class VagaFrontEnd extends VagaTech {
     constructor(empresa, cargo, requisitosExigidos) {
         super(empresa, cargo, requisitosExigidos);
-        this.habilidadesEspecificasFrontEnd = ["HTML5", "CSS3", "CCS3", "JavaScript", "React.js", "Angular", "Figma", "APIs", "UiUx", "FrontEnd"];
+        this.habilidadesEspecificasFrontEnd = ["HTML5", "CSS3", "JavaScript", "React.js", "Angular", "Figma", "APIs", "UiUx", "FrontEnd"];
     }
 
     filtrarRequisitosTecnicos() {
         return this.requisitosExigidos.filter(requisito => 
-            this.habilidadesEspecificasFrontEnd.some(hab => hab.toLowerCase() === requisito.toLowerCase())
+            this.habilidadesEspecificasFrontEnd.includes(requisito)
         );
     }
 
     analisarPerfil(habilidadesCandidato) {
-        const habilidadesValidadas = Array.isArray(habilidadesCandidato) ? habilidadesCandidato : [];
-        const requisitosTecnicosVaga = this.filtrarRequisitosTecnicos();
+  
+    const requisitosTecnicosVaga = this.filtrarRequisitosTecnicos();
+    const habilidadesEmComum = requisitosTecnicosVaga.filter(requisito => 
+        habilidadesCandidato.includes(requisito)
+    );
 
-        const habilidadesEmComum = requisitosTecnicosVaga.filter(requisito => 
-            habilidadesValidadas.some(hab => hab.toLowerCase() === requisito.toLowerCase())
-        );
+    // Identificando habilidades faltantes (RF05)
+    const habilidadesFaltantes = requisitosTecnicosVaga.filter(requisito => 
+        !habilidadesCandidato.includes(requisito)
+    );
 
-        const habilidadesFaltantes = requisitosTecnicosVaga.filter(requisito => 
-            !habilidadesValidadas.some(hab => hab.toLowerCase() === requisito.toLowerCase())
-        );
+    const totalRequisitos = requisitosTecnicosVaga.length;
+    const totalComum = habilidadesEmComum.length;
+    const percentual = totalRequisitos > 0 ? Math.round((totalComum / totalRequisitos) * 100) : 0;
 
-        const totalRequisitos = requisitosTecnicosVaga.length;
-        const totalComum = habilidadesEmComum.length;
-        const percentual = totalRequisitos > 0 ? Math.round((totalComum / totalRequisitos) * 100) : 0;
-
-        let classificacao = "Baixa compatibilidade";
-        if (percentual >= 80) {
-            classificacao = "Alta compatibilidade";
-        } else if (percentual >= 50) {
-            classificacao = "Média compatibilidade";
-        }
-
-        return {
-            empresa: this.empresa,
-            cargo: this.cargo,
-            percentual: percentual,
-            classificacao: classificacao,
-            faltantes: habilidadesFaltantes
-        };
+    let classificacao = "Baixa compatibilidade";
+    if (percentual >= 80) {
+        classificacao = "Alta compatibilidade";
+    } else if (percentual >= 50) {
+        classificacao = "Média compatibilidade";
     }
-}
 
-// ==========================================
+    return {
+        empresa: this.empresa,
+        cargo: this.cargo,
+        percentual: percentual,
+        classificacao: classificacao,
+        faltantes: habilidadesFaltantes
+    };
+}};
+
 // 4. Recomendação ao candidato (RF07)
-// ==========================================
-function gerarRecomendacao(habilidadesFaltantes) {
+
+function funcaoRecomendacao(habilidadesFaltantes) {
     if (habilidadesFaltantes.length === 0) {
-        return "Perfil excelente! Pronto para o processo seletivo técnico.";
+        return "Perfil excelente! Pronto para a próxima fase do processo seletivo.";
     }
 
     const faltantesMinusculo = habilidadesFaltantes.map(hab => hab.toLowerCase());
@@ -98,13 +94,12 @@ function gerarRecomendacao(habilidadesFaltantes) {
         return "🎨 RECOMENDAÇÃO: Melhorar competências de design focando em UI/UX e fidelidade visual.";
     }
     
-    return `📚 RECOMENDAÇÃO: Dedicar tempo para estudar as tecnologias: ${habilidadesFaltantes.join(", ")}.`;
+    return `📚 RECOMENDAÇÃO: Dedicar tempo para estudar as tecnologias: ${habilidadesFaltantes.join(",")}.`;
 }
 
-// ==========================================
 // 5. Callback (RF12)
-// ==========================================
-function imprimirRelatorioComCallback(listaResultados, callbackRecomendacao) {
+
+function imprimirRelatorio(listaResultados, funcaoRecomendacao) {
     console.log("\n📊 RELATÓRIO DE TRIAGEM DO RH:");
     
     listaResultados.forEach(res => {
@@ -113,51 +108,50 @@ function imprimirRelatorioComCallback(listaResultados, callbackRecomendacao) {
         console.log(`💼 Cargo: ${res.cargo}`);
         console.log(`📈 Percentual Técnico: ${res.percentual}%`);
         console.log(`🏷️  Status: [${res.classificacao}]`);
-        console.log(`❌ Habilidades em falta: ${res.faltantes.join(", ") || "Nenhuma!"}`);
+        console.log(`❌ Habilidades em falta: ${res.faltantes.join(",") || "Nenhuma!"}`);
         
-        // Chamada obrigatória da Callback passando as habilidades que faltam
-        const recomendacao = callbackRecomendacao(res.faltantes);
+        const recomendacao = funcaoRecomendacao(res.faltantes);
         console.log(`📖 Recomendação: ${recomendacao}`);
     });
     console.log(`----------------------------------------------------`);
 }
 
-// ==========================================
 // 6. Async/await
-// ==========================================
-async function executarMotor() {
+
+async function executarAplicativo() {
     try {
         const dados = await buscarDadosDoServidor(); 
         const cand = dados.candidato;
 
-        console.log(`\n📋 A analisar perfil do candidato: ${cand.nome}`);
+        console.log(`\n📋 Analisando perfil do candidato: ${cand.nome}`);
         console.log(`🎯 Área de Interesse: ${cand.areaInteresse}`);
 
         const resultadosAnalise = [];
 
         dados.vagas.forEach(vagaOriginal => {
-            const vagaInstanciada = new VagaFrontEnd(
+            const vagaOfertada = new VagaFrontEnd(
                 vagaOriginal.empresa,
                 vagaOriginal.cargo,
                 vagaOriginal.requisitosExigidos
             );
 
-            const analiseVaga = vagaInstanciada.analisarPerfil(cand.habilidadesCandidato);
+            const analiseVaga = vagaOfertada.analisarPerfil(cand.habilidadesCandidato);
             resultadosAnalise.push(analiseVaga);
         });
 
-        imprimirRelatorioComCallback(resultadosAnalise, gerarRecomendacao);
+        imprimirRelatorio(resultadosAnalise, funcaoRecomendacao);
 
         const vagaIdeal = resultadosAnalise.reduce((maior, atual) => 
             atual.percentual > maior.percentual ? atual : maior
         );
 
-        console.log(`\n🏆 VAGA COM MAIOR ADERÊNCIA: ${vagaIdeal.cargo} na ${vagaIdeal.empresa} (${vagaIdeal.percentual}% de compatibilidade)\n`);
+        console.log(`\n🏆 Vaga mais Adequada: ${vagaIdeal.cargo} na ${vagaIdeal.empresa} (${vagaIdeal.percentual}% de compatibilidade)\n`);
 
     } catch (error) {
-        console.error("Erro ao executar o motor de triagem:", error);
+        console.error("Erro ao executar o aplicativo:", error);
     }
 }
 
 // Inicializando a aplicação
-executarMotor();
+executarAplicativo();
+console.log("----------------------------------------------------------------------")
