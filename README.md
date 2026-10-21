@@ -10,7 +10,7 @@ Para para resolver o desafio proposto criei o seguinte organograma de resoluçã
   -> Realizei uma leitura detalhada da requisição (projeto). 
   -> Identifiquei os dados que deveriam entrar na aplicação (por exemplo: curriculum candidatos, vagas disponíveis, habilidades), classifiquei-os  segundo o tipo (array, number ou boolean) e descrevi onde seriam utilizados. 
   -> Na sequência pontuei sobre o resultado esperado  e as regras e limites estabelecidas para o projeto.   
-  ->Utilizei a ferramenta Kanban para organização criando 5 categorias (backlog, to do, doing, revisão e concluído) utilizando o Trello (acesse pelo link: https://trello.com/invite/b/6ad6b5f23ae8a46d42687f7a/ATTI1c436f91bd573efaf22f9da4d841613b2CA906B2/projeto-sr) e anotações manuais adicionais (imagem no Kanban).
+  -> Utilizei a ferramenta Kanban para organização criando 5 categorias (backlog, to do, doing, revisão e concluído) utilizando o Trello (acesse pelo link: https://trello.com/invite/b/6ad6b5f23ae8a46d42687f7a/ATTI1c436f91bd573efaf22f9da4d841613b2CA906B2/projeto-sr) e anotações manuais adicionais (imagem no Kanban).
   -> No repositório do GitHub, que poderá ser acessado através da URL:https://github.com/vetsara-maker/skillmatch.git
   Criei as branchs: main, developer, feature e README-developer (apenas para atualizar de forma mais clara o README.md) e fiz os commits conforme ia cumprindo as tarefas.
 
@@ -29,6 +29,5 @@ Utilizei-me de algumas extensões do VisualCode para facilitar a leitura no term
 
 A evolução é o caminho certo para quem aprecia a aprendizagem contínua e resolução de problemas, então estou certa que seguirei aprendendo e evoluíndo. 
 Até a próxima!
-SR-maker
 
 SR-maker
