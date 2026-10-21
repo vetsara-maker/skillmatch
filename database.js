@@ -11,12 +11,12 @@ const vagas = [
     },
     {empresa: "AnotaAi", 
      cargo: "AnalistaJuniorFrontEnd", 
-     requisitosExigidos: ["HTML5", "CCS3", "JavaScript", "Angular", "UiUx", "Comunicacao", 
+     requisitosExigidos: ["HTML5", "CSS3", "JavaScript", "Angular", "UiUx", "Comunicacao", 
         "AprendizagemRapida"]
     },
     {empresa: "CaktoPay", 
      cargo: "DesenvolvedorFrontendJrReact", 
-     requisitosExigidos: ["React.js", "HTML5", "CCS3", "JavaScript", "APIs", "Figma", "UiUx", 
+     requisitosExigidos: ["React.js", "HTML5", "CSS3", "JavaScript", "APIs", "Figma", "UiUx", 
         "Git", "FrontEnd"]
     }
 ];
@@ -27,7 +27,7 @@ const candidato = [{
     nome: "DanielSouzaESilva",
     areaInteresse: "FrontEnd",
     habilidadesCandidato: ["HTML5", "CSS3", "JavaScript", "TypeScript", "React.js", "Next.js", 
-        "CCS3", "Git", "GitHub", "Figma"],
+       "Git", "GitHub", "Figma"],
     experiencia: "1 ano" 
     }
 ];
